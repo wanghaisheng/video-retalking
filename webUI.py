@@ -108,7 +108,7 @@ with gradio.Blocks(
                     label="segment length (Second), 0 for no segmentation")
             with gradio.Row():
                 with gradio.Column():
-                    v = gradio.Video(label='SOurce Face')
+                    v = gradio.Video(label='Source Face')
 
                 with gradio.Column():
                     a = gradio.Audio(
@@ -120,31 +120,24 @@ with gradio.Blocks(
                 gradio.Examples(
                     label="Face Examples",
                     examples=[
-                        os.path.join(os.path.dirname(__file__),
-                                     "examples/face/1.mp4"),
-                        os.path.join(os.path.dirname(__file__),
-                                     "examples/face/2.mp4"),
-                        os.path.join(os.path.dirname(__file__),
-                                     "examples/face/3.mp4"),
-                        os.path.join(os.path.dirname(__file__),
-                                     "examples/face/4.mp4"),
-                        os.path.join(os.path.dirname(__file__),
-                                     "examples/face/5.mp4"),
+                        "examples/face/1.mp4",
+                        "examples/face/2.mp4",
+                        "examples/face/3.mp4",
+                        "examples/face/4.mp4",
+                        "examples/face/5.mp4"
                     ],
                     inputs=[v],
-                    fn=convert,
+                    #fn=convert,
                 )
             with gradio.Row():
                 gradio.Examples(
                     label="Audio Examples",
                     examples=[
-                        os.path.join(os.path.dirname(__file__),
-                                     "examples/audio/1.wav"),
-                        os.path.join(os.path.dirname(__file__),
-                                     "examples/audio/2.wav"),
+                        "examples/audio/1.wav", 
+                        "examples/audio/2.wav"
                     ],
                     inputs=[a],
-                    fn=convert,
+                    #fn=convert,
                 )
 
         with gradio.Column():
