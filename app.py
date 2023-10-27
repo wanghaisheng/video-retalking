@@ -73,8 +73,7 @@ with gr.Blocks(css=css) as demo:
                     ["examples/face/5.mp4", "examples/audio/1.wav"]
                   ],
                   fn=infer,
-                  inputs=[video_source, audio_target],
-                  outputs=[result]
+                  inputs=[video_source, audio_target]
                 )
             
             with gr.Column():
