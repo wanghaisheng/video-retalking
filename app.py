@@ -2,7 +2,7 @@ import os
 import subprocess
 import tempfile
 import gradio as gr
-import imageio_ffmpeg as ffmpeg
+from moviepy.editor import VideoFileClip
 
 # execute a CLI command
 def execute_command(command: str) -> None:
@@ -27,19 +27,15 @@ def infer(video_source, audio_target):
     # Create a temporary directory to store the output file
     output_dir = tempfile.mkdtemp()
     output_file = os.path.join(output_dir, 'output_video.mp4')
+
+    # Load the video
+    video = VideoFileClip(input_file)
     
-    # Define the codec options for the output video (e.g., H.264 and AAC for MP4)
-    codec_options = ["-c:v", "libx264", "-c:a", "aac"]
+    # Write the video to the output file with automatic codec selection
+    video.write_videofile(output_file, codec="libx264", audio_codec="aac")
     
-    # Construct the ffmpeg command
-    ffmpeg_cmd = ["ffmpeg", "-i", input_file] + codec_options + [output_file]
-    
-    # Execute the ffmpeg command
-    try:
-        subprocess.run(ffmpeg_cmd, check=True)
-        print("Video conversion successful. Output saved to:", output_file)
-    except subprocess.CalledProcessError as e:
-        print("Video conversion failed. Error:", e)
+    print("Video conversion successful.")
+   
     
     return output_file
 
