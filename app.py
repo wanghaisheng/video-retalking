@@ -1,6 +1,7 @@
 import os
 import subprocess
 import gradio as gr
+import imageio_ffmpeg as ffmpeg
 
 # execute a CLI command
 def execute_command(command: str) -> None:
@@ -20,7 +21,23 @@ def infer(video_source, audio_target):
 
     execute_command(command)
 
-    return output
+    input_file = output  # Replace with the path to your input video
+    output_file = 'output_video.mp4'  # Replace with the desired output file path
+    
+    # Define the codec options for the output video (e.g., H.264 and AAC for MP4)
+    codec_options = "-c:v libx264 -c:a aac"
+    
+    # Use ffmpeg to transcode the video
+    command = f"ffmpeg -i {input_file} {codec_options} {output_file}"
+    ffmpeg_cmd = ffmpeg.get_ffmpeg_exe()
+    return_code = ffmpeg.cmd(command, ffmpeg_path=ffmpeg_cmd)
+    
+    if return_code == 0:
+        print("Video conversion successful.")
+    else:
+        print("Video conversion failed.")
+
+    return output_file
 
 css="""
 #col-container{
