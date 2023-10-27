@@ -55,22 +55,32 @@ with gr.Blocks(css=css) as demo:
             Audio-based Lip Synchronization for Talking Head Video Editing in the Wild
         </p>
                 """)
-        video_source = gr.Video(label="Source Video", type="filepath")
-        audio_target = gr.Audio(label="Audio Target", type="filepath")
-        
-        submit_btn = gr.Button("Submit")
-        result = gr.Video(label="Result")
 
-        gr.Examples(
-          label="Examples",
-          examples=[
-            ["examples/face/1.mp4", "examples/audio/1.wav"]
-          ],
-          fn=infer,
-          inputs=[video_source, audio_target],
-          outputs=[result]
-        )
-    
+        with gr.Row():
+            with gr.Column():
+                video_source = gr.Video(label="Source Video", type="filepath")
+                audio_target = gr.Audio(label="Audio Target", type="filepath")
+        
+                submit_btn = gr.Button("Submit")
+
+                gr.Examples(
+                  label="Examples",
+                  examples=[
+                    ["examples/face/1.mp4", "examples/audio/1.wav"],
+                    ["examples/face/2.mp4", "examples/audio/1.wav"],
+                    ["examples/face/3.mp4", "examples/audio/2.wav"],
+                    ["examples/face/4.mp4", "examples/audio/2.wav"], 
+                    ["examples/face/5.mp4", "examples/audio/1.wav"]
+                  ],
+                  fn=infer,
+                  inputs=[video_source, audio_target],
+                  outputs=[result]
+                )
+            
+            with gr.Column():
+                result = gr.Video(label="Result")
+
+            
     submit_btn.click(fn=infer, inputs=[video_source, audio_target], outputs=[result])
     
 demo.queue(max_size=12).launch()
