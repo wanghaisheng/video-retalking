@@ -27,16 +27,16 @@ def infer(video_source, audio_target):
     # Define the codec options for the output video (e.g., H.264 and AAC for MP4)
     codec_options = "-c:v libx264 -c:a aac"
     
-    # Use ffmpeg to transcode the video
-    command = f"ffmpeg -i {input_file} {codec_options} {output_file}"
-    ffmpeg_cmd = ffmpeg.get_ffmpeg_exe()
-    return_code = ffmpeg.cmd(command, ffmpeg_path=ffmpeg_cmd)
+    # Construct the ffmpeg command
+    ffmpeg_cmd = ["ffmpeg", "-i", input_file, codec_options, output_file]
     
-    if return_code == 0:
+    # Execute the ffmpeg command
+    try:
+        subprocess.run(ffmpeg_cmd, check=True)
         print("Video conversion successful.")
-    else:
-        print("Video conversion failed.")
-
+    except subprocess.CalledProcessError as e:
+        print("Video conversion failed. Error:", e)
+    
     return output_file
 
 css="""
