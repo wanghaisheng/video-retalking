@@ -9,7 +9,7 @@ def execute_command(command: str) -> None:
 
 def infer(video_source, audio_target):
     
-    output = "result.mp4"
+    output = "results/result.mp4"
     command = [
       f"python", 
       f"inference.py",
@@ -19,8 +19,6 @@ def infer(video_source, audio_target):
     ]
 
     execute_command(command)
-
-    # note: we do not delete the lora and instead we keep it in the cache (persistent storage)
 
     return output
 
