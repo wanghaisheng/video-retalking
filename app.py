@@ -1,5 +1,6 @@
 import os
 import subprocess
+import tempfile
 import gradio as gr
 import imageio_ffmpeg as ffmpeg
 
@@ -22,18 +23,21 @@ def infer(video_source, audio_target):
     execute_command(command)
 
     input_file = output  # Replace with the path to your input video
-    output_file = 'output_video.mp4'  # Replace with the desired output file path
+    
+    # Create a temporary directory to store the output file
+    output_dir = tempfile.mkdtemp()
+    output_file = os.path.join(output_dir, 'output_video.mp4')
     
     # Define the codec options for the output video (e.g., H.264 and AAC for MP4)
-    codec_options = "-c:v libx264 -c:a aac"
+    codec_options = ["-c:v", "libx264", "-c:a", "aac"]
     
     # Construct the ffmpeg command
-    ffmpeg_cmd = ["ffmpeg", "-i", input_file, codec_options, output_file]
+    ffmpeg_cmd = ["ffmpeg", "-i", input_file] + codec_options + [output_file]
     
     # Execute the ffmpeg command
     try:
         subprocess.run(ffmpeg_cmd, check=True)
-        print("Video conversion successful.")
+        print("Video conversion successful. Output saved to:", output_file)
     except subprocess.CalledProcessError as e:
         print("Video conversion failed. Error:", e)
     
