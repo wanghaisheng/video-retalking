@@ -74,7 +74,7 @@ with gr.Blocks(css=css) as demo:
                     "examples/face/2.mp4",
                     "examples/face/3.mp4",
                     "examples/face/4.mp4", 
-                    "examples/face/5.mp4"]
+                    "examples/face/5.mp4"
                   ],
                   inputs=[video_source]
                 )
