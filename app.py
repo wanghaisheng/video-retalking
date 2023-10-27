@@ -42,7 +42,7 @@ def infer(video_source, audio_target):
 css="""
 #col-container{
     margin: 0 auto;
-    max-width: 720px;
+    max-width: 840px;
     text-align: left;
 }
 """
@@ -63,21 +63,28 @@ with gr.Blocks(css=css) as demo:
         
                 submit_btn = gr.Button("Submit")
 
-                gr.Examples(
-                  label="Examples",
-                  examples=[
-                    ["examples/face/1.mp4", "examples/audio/1.wav"],
-                    ["examples/face/2.mp4", "examples/audio/1.wav"],
-                    ["examples/face/3.mp4", "examples/audio/2.wav"],
-                    ["examples/face/4.mp4", "examples/audio/2.wav"], 
-                    ["examples/face/5.mp4", "examples/audio/1.wav"]
-                  ],
-                  fn=infer,
-                  inputs=[video_source, audio_target]
-                )
-            
             with gr.Column():
                 result = gr.Video(label="Result")
+
+        with gr.Row():
+            gr.Examples(
+                  label="Face Examples",
+                  examples=[
+                    "examples/face/1.mp4",
+                    "examples/face/2.mp4",
+                    "examples/face/3.mp4",
+                    "examples/face/4.mp4", 
+                    "examples/face/5.mp4"]
+                  ],
+                  inputs=[video_source]
+                )
+            gr.Examples(
+                  label="Voice Examples",
+                  examples=[
+                    "examples/audio/1.wav", "examples/audio/2.wav"
+                  ],
+                  inputs=[audio_target]
+                )
 
             
     submit_btn.click(fn=infer, inputs=[video_source, audio_target], outputs=[result])
