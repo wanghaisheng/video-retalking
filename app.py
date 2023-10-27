@@ -35,7 +35,7 @@ with gr.Blocks(css=css) as demo:
         gr.HTML("""
         <h2 style="text-align: center;">Video ReTalking</h2>
         <p style="text-align: center;">
-            
+            Audio-based Lip Synchronization for Talking Head Video Editing in the Wild
         </p>
                 """)
         video_source = gr.Video(label="Source Video", type="filepath")
@@ -43,15 +43,17 @@ with gr.Blocks(css=css) as demo:
         
         submit_btn = gr.Button("Submit")
         result = gr.Video(label="Result")
+
+        gr.Examples(
+          label="Examples",
+          examples=[
+            ["examples/face/1.mp4", "examples/audio/1.wav"]
+          ],
+          fn=infer,
+          inputs=[video_source, audio_target],
+          outputs=[result]
+        )
     
     submit_btn.click(fn=infer, inputs=[video_source, audio_target], outputs=[result])
-    gr.Examples(
-      label="Examples",
-      examples=[
-        ["examples/face/1.mp4", "examples/audio/1.wav"]
-      ],
-      fn=infer,
-      inputs=[video_source, audio_target],
-      outputs=[result]
-    )
+    
 demo.queue(max_size=12).launch()
