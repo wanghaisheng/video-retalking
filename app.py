@@ -58,7 +58,7 @@ with gr.Blocks(css=css) as demo:
 
         with gr.Row():
             with gr.Column():
-                video_source = gr.Video(label="Source Video", type="filepath")
+                video_source = gr.Video(label="Source Video")
                 audio_target = gr.Audio(label="Audio Target", type="filepath")
         
                 submit_btn = gr.Button("Submit")
