@@ -1,4 +1,5 @@
 import os
+import datetime
 import subprocess
 import tempfile
 import gradio as gr
@@ -10,8 +11,9 @@ def execute_command(command: str) -> None:
 
 
 def infer(video_source, audio_target):
+    timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
     
-    output = "results/result.mp4"
+    output = f"results/result_{timestamp}.mp4"
     command = [
       f"python", 
       f"inference.py",
@@ -26,7 +28,7 @@ def infer(video_source, audio_target):
     
     # Create a temporary directory to store the output file
     output_dir = tempfile.mkdtemp()
-    output_file = os.path.join(output_dir, 'output_video.mp4')
+    output_file = os.path.join(output_dir, f'output_video_{timestamp}.mp4')
 
     # Load the video
     video = VideoFileClip(input_file)
